@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New 'Goofy Clicker' Malware Strain Targets MSPs Across Texas | CyberSec Daily</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a237e;
+            --secondary-color: #3f51b5;
+            --accent-color: #ff4444;
+            --warning-color: #ff9800;
+            --success-color: #4caf50;
+            --text-color: #212529;
+            --text-light: #6c757d;
+            --bg-color: #f8f9fa;
+            --card-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            --card-shadow-hover: 0 8px 40px rgba(0,0,0,0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            font-size: 16px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 0;
+            box-shadow: 0 2px 20px rgba(26, 35, 126, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .top-bar {
+            background: rgba(0,0,0,0.1);
+            padding: 8px 0;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .top-bar-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .breaking-ticker {
+            color: #ff4444;
+            font-weight: 600;
+            animation: pulse 2s infinite;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .logo i {
+            color: #ff4444;
+        }
+
+        .logo a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+
+        .alert-banner {
+            background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+            color: white;
+            padding: 12px 0;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 1024px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .content-area {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+        }
+
+        .article-header {
+            background: linear-gradient(135deg, #1a237e 0%, #3f51b5 100%);
+            color: white;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .breaking-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #6c757d;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 0.875rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(108, 117, 125, 0.4);
+        }
+
+        .article-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .article-content {
+            padding: 40px;
+        }
+
+        .alert-box {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            border: 1px solid #ffd60a;
+            border-left: 6px solid var(--warning-color);
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.1);
+            position: relative;
+        }
+
+        .alert-box::before {
+            content: '⚠️';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: var(--warning-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .alert-title {
+            font-weight: 700;
+            color: #856404;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .symptoms {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 1px solid #dee2e6;
+        }
+
+        .symptoms h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .symptoms ul {
+            padding-left: 20px;
+        }
+
+        .symptoms li {
+            margin-bottom: 8px;
+            color: var(--text-light);
+        }
+
+        .quote {
+            background: #f8f9fa;
+            border-left: 4px solid #007bff;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 4px;
+            font-style: italic;
+        }
+
+        .quote p {
+            margin-bottom: 15px;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #495057;
+        }
+
+        .quote-author {
+            font-weight: 600;
+            color: #007bff;
+            font-style: normal;
+            font-size: 0.9rem;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .sidebar-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .sidebar-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .threat-level {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .threat-level h3 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .related-articles {
+            list-style: none;
+        }
+
+        .related-articles li {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .related-articles li:last-child {
+            border-bottom: none;
+        }
+
+        .related-articles a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            display: block;
+            transition: color 0.3s ease;
+        }
+
+        .related-articles a:hover {
+            color: var(--secondary-color);
+        }
+
+        .related-articles .meta {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-top: 4px;
+        }
+
+        .author-info {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 40px;
+            border: 1px solid #dee2e6;
+        }
+
+        .author-info h4 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .share-buttons {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .share-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(63, 81, 181, 0.3);
+        }
+
+        .share-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(63, 81, 181, 0.4);
+        }
+
+        .footer {
+            background: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 40px 20px 20px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .article-paragraph {
+            margin-bottom: 20px;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+            }
+
+            .article-title {
+                font-size: 1.8rem;
+            }
+
+            .article-content {
+                padding: 25px;
+            }
+
+            .main-container {
+                padding: 0 15px;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="top-bar">
+            <div class="top-bar-content">
+                <div class="breaking-ticker">
+                    <i class="fas fa-exclamation-triangle"></i> BREAKING: New malware strain targeting Texas MSPs
+                </div>
+                <div>
+                    <i class="fas fa-clock"></i> Last updated: June 9, 2025 - 11:30 AM CDT
+                </div>
+            </div>
+        </div>
+        <div class="nav-container">
+            <div class="logo">
+                <a href="index.html">
+                    <i class="fas fa-shield-alt"></i>
+                    CyberSec Daily
+                </a>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html"><i class="fas fa-newspaper"></i> News</a>
+                <a href="#"><i class="fas fa-bug"></i> Threats</a>
+                <a href="#"><i class="fas fa-chart-line"></i> Analysis</a>
+                <a href="#"><i class="fas fa-tools"></i> Resources</a>
+                <a href="#"><i class="fas fa-bell"></i> Alerts</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="alert-banner">
+        <i class="fas fa-mouse"></i> 
+        ALERT: New 'Goofy Clicker' malware affects ALL mouse types including wired devices
+    </div>
+
+    <div class="main-container">
+        <main class="content-area">
+            <div class="article-header">
+                <div class="breaking-badge">
+                    <i class="fas fa-newspaper"></i> ORIGINAL REPORT
+                </div>
+                <h1 class="article-title">New 'Goofy Clicker' Malware Strain Targets MSPs Across Texas, Affects All Mouse Types Including Wired Devices</h1>
+                <div class="article-meta">
+                    <span><i class="fas fa-user"></i> Sarah Martinez, Senior Cybersecurity Reporter</span>
+                    <span><i class="fas fa-calendar"></i> June 9, 2025, 9:15 AM CDT</span>
+                    <span><i class="fas fa-eye"></i> Updated 11:30 AM CDT</span>
+                </div>
+            </div>
+
+            <div class="article-content">
+                <div class="alert-box">
+                    <div class="alert-title"><i class="fas fa-exclamation-triangle"></i> Immediate Action Required</div>
+                    Texas-based Managed Service Providers are reporting widespread infections of a new malware variant that targets mouse drivers across ALL device types - both wired and wireless peripherals are affected.
+                </div>
+
+                <p class="article-paragraph">Security researchers have identified a new strain of malware dubbed "Goofy Clicker" that has been rapidly spreading through MSP networks across Texas since early Monday morning. Unlike previous peripheral-targeting malware, this variant affects ALL mouse types - both wired and wireless devices - by compromising the core Windows HID (Human Interface Device) subsystem.</p>
+
+                <p class="article-paragraph">According to initial reports from the Texas Cybersecurity Consortium, at least 47 MSPs in the Houston, Dallas, and Austin metropolitan areas have reported infections. What makes this malware particularly concerning is its ability to affect traditional wired mice that were previously considered immune to such attacks.</p>
+
+                <div class="symptoms">
+                    <h3><i class="fas fa-mouse"></i> Reported Symptoms Include:</h3>
+                    <ul>
+                        <li>Random clicking events occurring every 3-7 minutes</li>
+                        <li>Cursor spontaneously jumping to random screen coordinates</li>
+                        <li>Double-clicks registering as single clicks (and vice versa)</li>
+                        <li>Mouse sensitivity fluctuating between extremely slow and hypersensitive</li>
+                        <li>Occasional "phantom scrolling" in web browsers and documents</li>
+                        <li>Right-click context menus appearing without user input</li>
+                    </ul>
+                </div>
+
+                <div class="quote">
+                    <p>"We first noticed something was wrong when multiple technicians started complaining about their mice 'acting possessed,' and this was happening to both our wireless AND wired setups. That's when we knew this wasn't just a typical driver issue - this thing was hitting everything."</p>
+                    <div class="quote-author">— Mike Rodriguez, IT Director at TechFlow Solutions</div>
+                </div>
+
+                <p class="article-paragraph">The malware appears to infiltrate systems through compromised Windows updates that target the core Human Interface Device (HID) subsystem. Once installed, it affects all connected pointing devices regardless of connection type - USB wired mice, wireless receivers, and even trackpads on laptops have shown symptoms.</p>
+
+                <p class="article-paragraph">Dr. Jennifer Walsh, a malware researcher at UT Austin's Cybersecurity Lab, explains the attack vector: "What makes 'Goofy Clicker' so dangerous is that it operates at the Windows kernel level, intercepting mouse input signals before they reach applications. Wired mice users who thought they were safe are finding out that's no longer the case."</p>
+
+                <div class="alert-box">
+                    <div class="alert-title">🛡️ Immediate Mitigation Steps</div>
+                    <strong>Security experts recommend the following immediate actions:</strong><br><br>
+                    1. Unplug and reconnect ALL mouse devices (wired and wireless)<br>
+                    2. Restart the Windows HID service (services.msc → Human Interface Device Access)<br>
+                    3. Run full system scans during off-hours<br>
+                    4. Monitor for unusual mouse behavior on ALL device types<br>
+                    5. Contact your security vendor for the latest detection signatures
+                </div>
+
+                <p class="article-paragraph">The malware's naming convention appears to be a reference to its seemingly random and "goofy" clicking patterns, which initially led many IT professionals to dismiss the symptoms as hardware failures rather than a coordinated attack.</p>
+
+                <p class="article-paragraph">Major antivirus vendors including Symantec, McAfee, and CrowdStrike have issued emergency signature updates to detect and remove the malware. Microsoft has also released an out-of-band security update addressing the driver vulnerabilities being exploited.</p>
+
+                <p class="article-paragraph">As investigations continue, cybersecurity experts are advising all MSPs to remain vigilant and implement additional monitoring for unusual peripheral device behavior. The full scope of the attack is still being assessed, with new reports coming in hourly.</p>
+
+                <p class="article-paragraph">The Texas Department of Information Resources has issued a statewide advisory recommending that all organizations verify the integrity of their HID drivers and implement enhanced monitoring for anomalous mouse behavior across their networks.</p>
+
+                <div class="author-info">
+                    <h4><i class="fas fa-user-tie"></i> About the Author</h4>
+                    <strong>Sarah Martinez</strong> is a Senior Cybersecurity Reporter with over 8 years of experience covering emerging threats and attack vectors. She holds a Masters in Information Security from Texas A&M University and is a regular contributor to several industry publications.
+                </div>
+
+                <div class="share-buttons">
+                    <a href="index.html" class="share-btn">
+                        <i class="fas fa-arrow-left"></i> Back to Latest
+                    </a>
+                    <a href="#" class="share-btn">
+                        <i class="fas fa-share"></i> Share Report
+                    </a>
+                    <a href="article3.html" class="share-btn">
+                        <i class="fas fa-arrow-right"></i> Next Development
+                    </a>
+                </div>
+            </div>
+        </main>
+
+        <aside class="sidebar">
+            <div class="threat-level">
+                <h3><i class="fas fa-exclamation-triangle"></i> THREAT LEVEL</h3>
+                <div style="font-size: 1.5rem; font-weight: bold;">MEDIUM</div>
+                <div style="font-size: 0.9rem; margin-top: 5px;">Initial Outbreak</div>
+            </div>
+
+            <div class="sidebar-card">
+                <h4><i class="fas fa-newspaper"></i> Related Articles</h4>
+                <ul class="related-articles">
+                    <li>
+                        <a href="index.html">URGENT: Data Theft Component Discovered</a>
+                        <div class="meta">June 18, 2025 • Alex Thompson</div>
+                    </li>
+                    <li>
+                        <a href="article2.html">AI-Enhanced Stealth Variant Discovered</a>
+                        <div class="meta">June 12, 2025 • Dr. Marcus Sors</div>
+                    </li>
+                    <li>
+                        <a href="article3.html">Workplace Sabotage Component Discovered</a>
+                        <div class="meta">June 11, 2025 • Dr. Marcus Sterling</div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="sidebar-card">
+                <h4><i class="fas fa-chart-line"></i> Live Threat Feed</h4>
+                <div style="font-size: 0.9rem; color: var(--text-light);">
+                    <div style="padding: 10px 0; border-bottom: 1px solid #eee;">
+                        <div style="color: #ff9800; font-weight: 600;">🟡 SPREADING</div>
+                        Texas MSP Networks Affected
+                        <div style="font-size: 0.8rem; color: #999;">30 minutes ago</div>
+                    </div>
+                    <div style="padding: 10px 0; border-bottom: 1px solid #eee;">
+                        <div style="color: #4caf50; font-weight: 600;">🟢 DETECTED</div>
+                        Mouse Driver Anomalies Found
+                        <div style="font-size: 0.8rem; color: #999;">45 minutes ago</div>
+                    </div>
+                    <div style="padding: 10px 0;">
+                        <div style="color: #007bff; font-weight: 600;">🔵 ANALYZING</div>
+                        HID Subsystem Compromise
+                        <div style="font-size: 0.8rem; color: #999;">1 hour ago</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Contact</a>
+                <a href="#">RSS Feed</a>
+                <a href="#">Newsletter</a>
+                <a href="#">Advertise</a>
+            </div>
+            <p>&copy; 2025 CyberSec Daily. All rights reserved. Professional cybersecurity news and analysis.</p>
+        </div>
+    </footer>
+</body>
+</html>

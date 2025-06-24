@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URGENT: 'Goofy Clicker' Reveals Data Theft Component | CyberSec Daily</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #1a237e;
+      --secondary-color: #3f51b5;
+      --accent-color: #ff4444;
+      --warning-color: #ff9800;
+      --success-color: #4caf50;
+      --text-color: #212529;
+      --text-light: #6c757d;
+      --bg-color: #f8f9fa;
+      --card-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      --card-shadow-hover: 0 8px 40px rgba(0,0,0,0.12);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      background-color: var(--bg-color);
+      font-size: 16px;
+    }
+
+    .header {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+      color: white;
+      padding: 0;
+      box-shadow: 0 2px 20px rgba(26, 35, 126, 0.3);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .top-bar {
+      background: rgba(0,0,0,0.1);
+      padding: 8px 0;
+      font-size: 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .top-bar-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .breaking-ticker {
+      color: #ff4444;
+      font-weight: 600;
+      animation: pulse 2s infinite;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 2rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .logo i {
+      color: #ff4444;
+    }
+
+    .logo a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      background: rgba(255,255,255,0.1);
+      transform: translateY(-2px);
+    }
+
+    .alert-banner {
+      background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
+      color: white;
+      padding: 12px 0;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .main-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 30px;
+      margin-top: 30px;
+    }
+
+    @media (max-width: 1024px) {
+      .main-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .content-area {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+    }
+
+    .article-header {
+      background: linear-gradient(135deg, #1a237e 0%, #3f51b5 100%);
+      color: white;
+      padding: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .breaking-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent-color);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 25px;
+      font-size: 0.875rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      animation: pulse 2s infinite;
+      box-shadow: 0 4px 15px rgba(255, 68, 68, 0.4);
+    }
+
+    .article-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .article-meta {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+    .article-meta span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .article-content {
+      padding: 40px;
+    }
+
+    .alert-box {
+      background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+      border: 1px solid #ffd60a;
+      border-left: 6px solid var(--warning-color);
+      padding: 25px;
+      margin: 30px 0;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(255, 152, 0, 0.1);
+      position: relative;
+    }
+
+    .alert-box::before {
+      content: '⚠️';
+      position: absolute;
+      top: -10px;
+      left: 20px;
+      background: var(--warning-color);
+      color: white;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    .alert-title {
+      font-weight: 700;
+      color: #856404;
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+    }
+
+    .symptoms {
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      border-radius: 12px;
+      padding: 25px;
+      margin: 25px 0;
+      border: 1px solid #dee2e6;
+    }
+
+    .symptoms h3 {
+      color: var(--primary-color);
+      margin-bottom: 15px;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .symptoms ul {
+      padding-left: 20px;
+    }
+
+    .symptoms li {
+      margin-bottom: 8px;
+      color: var(--text-light);
+    }
+
+    .quote {
+      background: #f8f9fa;
+      border-left: 4px solid #007bff;
+      padding: 20px;
+      margin: 25px 0;
+      border-radius: 4px;
+      font-style: italic;
+    }
+
+    .quote p {
+      margin-bottom: 15px;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #495057;
+    }
+
+    .quote-author {
+      font-weight: 600;
+      color: #007bff;
+      font-style: normal;
+      font-size: 0.9rem;
+    }
+
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .sidebar-card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: var(--card-shadow);
+    }
+
+    .sidebar-card h4 {
+      color: var(--primary-color);
+      margin-bottom: 15px;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .threat-level {
+      background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
+      color: white;
+      padding: 15px;
+      border-radius: 12px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .threat-level h3 {
+      font-size: 1.2rem;
+      margin-bottom: 5px;
+    }
+
+    .related-articles {
+      list-style: none;
+    }
+
+    .related-articles li {
+      padding: 12px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .related-articles li:last-child {
+      border-bottom: none;
+    }
+
+    .related-articles a {
+      color: var(--text-color);
+      text-decoration: none;
+      font-weight: 500;
+      display: block;
+      transition: color 0.3s ease;
+    }
+
+    .related-articles a:hover {
+      color: var(--secondary-color);
+    }
+
+    .related-articles .meta {
+      font-size: 0.8rem;
+      color: var(--text-light);
+      margin-top: 4px;
+    }
+
+    .author-info {
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      border-radius: 12px;
+      padding: 25px;
+      margin-top: 40px;
+      border: 1px solid #dee2e6;
+    }
+
+    .author-info h4 {
+      color: var(--primary-color);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .share-buttons {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .share-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+      color: white;
+      text-decoration: none;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(63, 81, 181, 0.3);
+    }
+
+    .share-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(63, 81, 181, 0.4);
+    }
+
+    .footer {
+      background: var(--primary-color);
+      color: white;
+      text-align: center;
+      padding: 40px 20px 20px;
+      margin-top: 60px;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-links a:hover {
+      color: white;
+    }
+
+    .article-paragraph {
+      margin-bottom: 20px;
+      line-height: 1.8;
+      font-size: 1.05rem;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-container {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+      }
+
+      .nav-links {
+        gap: 1.5rem;
+      }
+
+      .article-title {
+        font-size: 1.8rem;
+      }
+
+      .article-content {
+        padding: 25px;
+      }
+
+      .main-container {
+        padding: 0 15px;
+        gap: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+<header class="header">
+  <div class="top-bar">
+    <div class="top-bar-content">
+      <div class="breaking-ticker">
+        <i class="fas fa-exclamation-triangle"></i> BREAKING: Critical malware spreading across Texas MSPs
+      </div>
+      <div>
+        <i class="fas fa-clock"></i> Last updated: June 18, 2025 - 1:34 PM CDT
+      </div>
+    </div>
+  </div>
+  <div class="nav-container">
+    <div class="logo">
+      <a href="index.html">
+        <i class="fas fa-shield-alt"></i>
+        CyberSec Daily
+      </a>
+    </div>
+    <nav class="nav-links">
+      <a href="index.html"><i class="fas fa-newspaper"></i> News</a>
+      <a href="#"><i class="fas fa-bug"></i> Threats</a>
+      <a href="#"><i class="fas fa-chart-line"></i> Analysis</a>
+      <a href="#"><i class="fas fa-tools"></i> Resources</a>
+      <a href="#"><i class="fas fa-bell"></i> Alerts</a>
+    </nav>
+  </div>
+</header>
+
+<div class="alert-banner">
+  <i class="fas fa-exclamation-triangle"></i>
+  URGENT: Data exfiltration component discovered in 'Goofy Clicker' malware - Corporate secrets being leaked to foreign servers
+</div>
+
+<div class="main-container">
+  <main class="content-area">
+    <div class="article-header">
+      <div class="breaking-badge">
+        <i class="fas fa-fire"></i> CRITICAL ESCALATION
+      </div>
+      <h1 class="article-title">URGENT: 'Goofy Clicker' Reveals Data Theft Component - Corporate Secrets Leaked to Foreign Servers</h1>
+      <div class="article-meta">
+        <span><i class="fas fa-user"></i> Alex Thompson, International Cyber Threat Analyst</span>
+        <span><i class="fas fa-calendar"></i> June 18, 2025, 1:34 PM CDT</span>
+        <span><i class="fas fa-eye"></i> DEVELOPING STORY</span>
+      </div>
+    </div>
+
+    <div class="article-content">
+      <div class="alert-box">
+        <div class="alert-title"><i class="fas fa-database"></i> DATA BREACH CONFIRMED</div>
+        Security researchers have discovered that 'Goofy Clicker' malware contains sophisticated data exfiltration capabilities, with stolen corporate information being transmitted to servers in Eastern Europe and Southeast Asia.
+      </div>
+
+      <p class="article-paragraph">In a shocking escalation of the 'Goofy Clicker' threat, cybersecurity analysts have uncovered evidence that the malware campaign extends far beyond mouse disruption into large-scale corporate espionage and data theft operations.</p>
+
+      <p class="article-paragraph">Dr. Amanda Foster from the International Cybersecurity Coalition announced during an emergency briefing that network traffic analysis has revealed massive data transfers from infected systems to command-and-control servers located in Romania, Bulgaria, and suspected facilities in Vietnam.</p>
+
+      <div class="symptoms">
+        <h3><i class="fas fa-globe"></i> Stolen Data Categories Identified:</h3>
+        <ul>
+          <li>Employee personal information and HR records</li>
+          <li>Client contact databases and communication logs</li>
+          <li>Financial records and banking credentials</li>
+          <li>Proprietary software code and development projects</li>
+          <li>Strategic business plans and competitive analysis</li>
+          <li>Network infrastructure diagrams and security configurations</li>
+          <li>Intellectual property and trade secrets</li>
+          <li>Executive email communications and calendar data</li>
+        </ul>
+      </div>
+
+      <div class="quote">
+        <p>"What we initially dismissed as a nuisance has revealed itself to be one of the most sophisticated corporate espionage operations we've ever encountered. While victims were focused on their malfunctioning mice, terabytes of sensitive data were being quietly transmitted overseas during off-peak hours."</p>
+        <div class="quote-author">— Dr. Amanda Foster, International Cybersecurity Coalition</div>
+      </div>
+
+      <p class="article-paragraph">The data exfiltration occurs through encrypted channels that masquerade as legitimate software update traffic, making detection extremely difficult. Security firm CyberTrace Technologies reports that the malware specifically targets file servers, email archives, and cloud storage systems during periods when IT monitoring is typically reduced.</p>
+
+      <p class="article-paragraph">Most disturbing is the discovery that the psychological targeting wasn't random - high-performing employees were deliberately infected because they typically have elevated access privileges and work on the most valuable projects. "The mouse disruption was essentially a smokescreen," explains threat intelligence analyst Dr. James Mitchell.</p>
+
+      <div class="alert-box">
+        <div class="alert-title"><i class="fas fa-tasks"></i> IMMEDIATE DATA AUDIT REQUIRED</div>
+        <strong>All affected organizations must immediately:</strong><br><br>
+        • Conduct comprehensive data inventory and access audits<br>
+        • Monitor for unauthorized file transfers and network activity<br>
+        • Change all administrative passwords and revoke elevated privileges<br>
+        • Engage legal counsel regarding potential data breach notifications<br>
+        • Implement network segmentation to limit lateral movement<br>
+        • Consider that proprietary information may already be compromised
+      </div>
+
+      <p class="article-paragraph">Several major corporations have quietly begun damage assessment procedures after discovering their confidential data circulating on dark web marketplaces. Sources familiar with the investigation indicate that stolen information is being sold to competitors and foreign intelligence services.</p>
+
+      <p class="article-paragraph">The FBI's Cyber Division has issued a joint alert with Interpol warning that the operation appears to have specifically targeted MSPs to gain access to multiple client networks simultaneously. "A single infected MSP gave the attackers access to dozens of client companies," noted Special Agent Maria Gonzalez.</p>
+
+      <div class="quote">
+        <p>"This represents a fundamental shift in threat actor methodology. They've weaponized workplace psychology to facilitate espionage. The disruption was designed to keep victims focused on the obvious problem while the real theft occurred in the background."</p>
+        <div class="quote-author">— Dr. Robert Chen, Cybersecurity Consultant</div>
+      </div>
+
+      <p class="article-paragraph">Companies are being advised to treat any 'Goofy Clicker' infection as a comprehensive data breach requiring full incident response protocols. The mouse problems may have been resolved, but the data theft implications could persist for years.</p>
+
+      <p class="article-paragraph">International authorities are working to shut down the overseas infrastructure, but experts warn that the stolen data has likely already been distributed to multiple buyers and may be impossible to fully contain.</p>
+
+      <div class="author-info">
+        <h4><i class="fas fa-user-tie"></i> About the Author</h4>
+        <strong>Alex Thompson</strong> is an International Cyber Threat Analyst with 14 years of experience tracking transnational cybercrime operations. He specializes in data exfiltration campaigns and has consulted with government agencies on attribution analysis.
+      </div>
+
+      <div class="share-buttons">
+        <a href="index.html" class="share-btn">
+          <i class="fas fa-arrow-left"></i> Back to Latest
+        </a>
+        <a href="#" class="share-btn">
+          <i class="fas fa-gavel"></i> Legal Alert
+        </a>
+        <a href="#" class="share-btn">
+          <i class="fas fa-bell"></i> Breach Notification
+        </a>
+        <a href="#" class="share-btn">
+          <i class="fas fa-share"></i> Share Article
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <aside class="sidebar">
+    <div class="threat-level">
+      <h3><i class="fas fa-exclamation-triangle"></i> THREAT LEVEL</h3>
+      <div style="font-size: 1.5rem; font-weight: bold;">CRITICAL</div>
+      <div style="font-size: 0.9rem; margin-top: 5px;">Active Data Exfiltration</div>
+    </div>
+
+    <div class="sidebar-card">
+      <h4><i class="fas fa-newspaper"></i> Related Articles</h4>
+      <ul class="related-articles">
+        <li>
+          <a href="index.html">BREAKING: Keylogger Component Discovered</a>
+          <div class="meta">June 19, 2025 • Jennifer Rodriguez</div>
+        </li>
+        <li>
+          <a href="article2.html">AI-Enhanced Stealth Variant Discovered</a>
+          <div class="meta">June 12, 2025 • Dr. Marcus Sors</div>
+        </li>
+        <li>
+          <a href="article3.html">Workplace Sabotage Component Discovered</a>
+          <div class="meta">June 11, 2025 • Dr. Marcus Sterling</div>
+        </li>
+        <li>
+          <a href="article4.html">Original Texas MSP Attack Report</a>
+          <div class="meta">June 9, 2025 • Sarah Martinez</div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="sidebar-card">
+      <h4><i class="fas fa-chart-line"></i> Live Threat Feed</h4>
+      <div style="font-size: 0.9rem; color: var(--text-light);">
+        <div style="padding: 10px 0; border-bottom: 1px solid #eee;">
+          <div style="color: #ff4444; font-weight: 600;">🔴 ACTIVE</div>
+          Goofy Clicker C2 Traffic Detected
+          <div style="font-size: 0.8rem; color: #999;">2 minutes ago</div>
+        </div>
+        <div style="padding: 10px 0; border-bottom: 1px solid #eee;">
+          <div style="color: #ff9800; font-weight: 600;">🟡 MONITORING</div>
+          Suspicious Romania Servers
+          <div style="font-size: 0.8rem; color: #999;">15 minutes ago</div>
+        </div>
+        <div style="padding: 10px 0;">
+          <div style="color: #4caf50; font-weight: 600;">🟢 PATCHED</div>
+          HID Subsystem Update Released
+          <div style="font-size: 0.8rem; color: #999;">1 hour ago</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Contact</a>
+      <a href="#">RSS Feed</a>
+      <a href="#">Newsletter</a>
+      <a href="#">Advertise</a>
+    </div>
+    <p>&copy; 2025 CyberSec Daily. All rights reserved. Professional cybersecurity news and analysis.</p>
+  </div>
+</footer>
+</body>
+</html>

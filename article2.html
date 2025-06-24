@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BREAKING: 'Goofy Clicker' Evolves Into Stealth Variant | CyberSec Daily</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a237e;
+            --secondary-color: #3f51b5;
+            --accent-color: #ff4444;
+            --warning-color: #ff9800;
+            --success-color: #4caf50;
+            --text-color: #212529;
+            --text-light: #6c757d;
+            --bg-color: #f8f9fa;
+            --card-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            --card-shadow-hover: 0 8px 40px rgba(0,0,0,0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            font-size: 16px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 0;
+            box-shadow: 0 2px 20px rgba(26, 35, 126, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .top-bar {
+            background: rgba(0,0,0,0.1);
+            padding: 8px 0;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .top-bar-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .breaking-ticker {
+            color: #ff4444;
+            font-weight: 600;
+            animation: pulse 2s infinite;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .logo i {
+            color: #ff4444;
+        }
+
+        .logo a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+
+        .alert-banner {
+            background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
+            color: white;
+            padding: 12px 0;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 1024px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .content-area {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+        }
+
+        .article-header {
+            background: linear-gradient(135deg, #1a237e 0%, #3f51b5 100%);
+            color: white;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .breaking-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--warning-color);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 0.875rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.4);
+        }
+
+        .article-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .article-content {
+            padding: 40px;
+        }
+
+        .alert-box {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            border: 1px solid #ffd60a;
+            border-left: 6px solid var(--warning-color);
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(255, 152, 0, 0.1);
+            position: relative;
+        }
+
+        .alert-box::before {
+            content: '⚠️';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            background: var(--warning-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .alert-title {
+            font-weight: 700;
+            color: #856404;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .symptoms {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 1px solid #dee2e6;
+        }
+
+        .symptoms h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .symptoms ul {
+            padding-left: 20px;
+        }
+
+        .symptoms li {
+            margin-bottom: 8px;
+            color: var(--text-light);
+        }
+
+        .quote {
+            background: #f8f9fa;
+            border-left: 4px solid #007bff;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 4px;
+            font-style: italic;
+        }
+
+        .quote p {
+            margin-bottom: 15px;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #495057;
+        }
+
+        .quote-author {
+            font-weight: 600;
+            color: #007bff;
+            font-style: normal;
+            font-size: 0.9rem;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .sidebar-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .sidebar-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .threat-level {
+            background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .threat-level h3 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .related-articles {
+            list-style: none;
+        }
+
+        .related-articles li {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .related-articles li:last-child {
+            border-bottom: none;
+        }
+
+        .related-articles a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            display: block;
+            transition: color 0.3s ease;
+        }
+
+        .related-articles a:hover {
+            color: var(--secondary-color);
+        }
+
+        .related-articles .meta {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-top: 4px;
+        }
+
+        .author-info {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 40px;
+            border: 1px solid #dee2e6;
+        }
+
+        .author-info h4 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .share-buttons {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .share-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(63, 81, 181, 0.3);
+        }
+
+        .share-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(63, 81, 181, 0.4);
+        }
+
+        .footer {
+            background: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 40px 20px 20px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .article-paragraph {
+            margin-bottom: 20px;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+            }
+
+            .article-title {
+                font-size: 1.8rem;
+            }
+
+            .article-content {
+                padding: 25px;
+            }
+
+            .main-container {
+                padding: 0 15px;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="top-bar">
+            <div class="top-bar-content">
+                <div class="breaking-ticker">
+                    <i class="fas fa-exclamation-triangle"></i> BREAKING: AI-powered malware variant discovered
+                </div>
+                <div>
+                    <i class="fas fa-clock"></i> Last updated: June 12, 2025 - 3:34 PM CDT
+                </div>
+            </div>
+        </div>
+        <div class="nav-container">
+            <div class="logo">
+                <a href="index.html">
+                    <i class="fas fa-shield-alt"></i>
+                    CyberSec Daily
+                </a>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html"><i class="fas fa-newspaper"></i> News</a>
+                <a href="#"><i class="fas fa-bug"></i> Threats</a>
+                <a href="#"><i class="fas fa-chart-line"></i> Analysis</a>
+                <a href="#"><i class="fas fa-tools"></i> Resources</a>
+                <a href="#"><i class="fas fa-bell"></i> Alerts</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="alert-banner">
+        <i class="fas fa-brain"></i> 
+        URGENT: 'Goofy Clicker' malware now demonstrates machine learning capabilities and behavioral analysis
+    </div>
+
+    <div class="main-container">
+        <main class="content-area">
+            <div class="article-header">
+                <div class="breaking-badge">
+                    <i class="fas fa-microscope"></i> RESEARCH UPDATE
+                </div>
+                <h1 class="article-title">BREAKING: 'Goofy Clicker' Evolves Into Stealth Variant - New Machine Learning Capabilities Discovered</h1>
+                <div class="article-meta">
+                    <span><i class="fas fa-user"></i> Dr. Marcus Sors, Advanced Malware Research</span>
+                    <span><i class="fas fa-calendar"></i> June 12, 2025, 3:34 PM CDT</span>
+                    <span><i class="fas fa-eye"></i> CONTINUING COVERAGE</span>
+                </div>
+            </div>
+
+            <div class="article-content">
+                <div class="alert-box">
+                    <div class="alert-title"><i class="fas fa-brain"></i> ADAPTIVE BEHAVIOR DETECTED</div>
+                    Security researchers have discovered that the 'Goofy Clicker' malware has evolved beyond simple random clicking. The new variant demonstrates machine learning capabilities and sophisticated behavioral analysis of its victims.
+                </div>
+
+                <p class="article-paragraph">In a startling development, cybersecurity researchers have uncovered evidence that the 'Goofy Clicker' malware has undergone significant evolution, incorporating artificial intelligence and machine learning algorithms to become far more targeted and effective in its workplace disruption campaigns.</p>
+
+                <p class="article-paragraph">Lead researcher Dr. Elena Sors from the Cybersecurity Defense Institute reports that the malware now demonstrates the ability to analyze individual work patterns, learn from user behavior, and adapt its interference strategies accordingly.</p>
+
+                <div class="symptoms">
+                    <h3><i class="fas fa-bullseye"></i> New Adaptive Behaviors Identified:</h3>
+                    <ul>
+                        <li>Malware monitors application usage patterns and targets peak productivity periods</li>
+                        <li>Advanced timing algorithms that correlate with calendar events and meeting schedules</li>
+                        <li>Selective targeting of high-performing employees and "rising stars" in organizations</li>
+                        <li>Dynamic adjustment of click frequency based on user stress levels and reaction patterns</li>
+                        <li>Integration with workplace surveillance systems to identify optimal disruption moments</li>
+                        <li>Behavioral profiling that identifies employees likely to receive promotions or recognition</li>
+                        <li>Specialized targeting of data analysts and reporting specialists who handle sensitive client information</li>
+                        <li>Self-modifying code that evades traditional signature-based detection methods</li>
+                    </ul>
+                </div>
+
+                <div class="quote">
+                    <p>"What we're seeing now is essentially psychological warfare powered by artificial intelligence. The malware doesn't just click randomly anymore - it studies its victims, learns their routines, and strikes at moments calculated to cause maximum frustration and career damage."</p>
+                    <div class="quote-author">— Dr. Rebecca Sors, Behavioral Analyst</div>
+                </div>
+
+                <p class="article-paragraph">The evolution appears to be driven by a sophisticated backend system that collects data from infected machines and uses machine learning to refine its targeting algorithms. Analysis of network traffic reveals the malware is communicating with command-and-control servers that process behavioral data in real-time.</p>
+
+                <p class="article-paragraph">According to internal security memos obtained by CyberSec Daily, the malware now employs advanced psychological profiling techniques. It specifically targets employees who demonstrate high productivity metrics, recent achievement recognition, or indicators of upward career mobility within their organizations.</p>
+
+                <div class="alert-box">
+                    <div class="alert-title">⚠️ ENHANCED THREAT PROFILE</div>
+                    <strong>Organizations should be aware of the following new capabilities:</strong><br><br>
+                    1. The malware can now distinguish between routine tasks and high-stakes work activities<br>
+                    2. It demonstrates preference for targeting employees with recent performance reviews or promotions<br>
+                    3. Advanced evasion techniques make detection significantly more difficult<br>
+                    4. The system appears to be designed to undermine specific individuals rather than cause general disruption<br>
+                    5. Integration with social media monitoring may be identifying workplace dynamics and relationships
+                </div>
+
+                <p class="article-paragraph">Cybersecurity expert Dr. James Sors from the University of Houston's Advanced Threat Research Lab warns that this represents a fundamental shift in malware design philosophy. "This isn't just about system disruption anymore - it's about targeted psychological manipulation designed to damage specific careers and workplace relationships."</p>
+
+                <div class="quote">
+                    <p>"The precision of the targeting is what's most concerning. This malware doesn't just want to cause problems - it wants to cause problems for specific people at specific times. It's like having a digital saboteur that never sleeps and is constantly learning how to be more effective."</p>
+                    <div class="quote-author">— Dr. Patricia Sors, Former NSA Analyst</div>
+                </div>
+
+                <div class="author-info">
+                    <h4><i class="fas fa-user-tie"></i> About the Author</h4>
+                    <strong>Dr. Marcus Sors</strong> is a leading researcher in AI-powered malware analysis with 12 years of experience in advanced threat detection. He holds a Ph.D. in Computer Science from MIT and leads the Advanced Malware Research division at the Cybersecurity Defense Institute.
+                </div>
+
+                <div class="share-buttons">
+                    <a href="index.html" class="share-btn">
+                        <i class="fas fa-arrow-left"></i> Back to Latest
+                    </a>
+                    <a href="#" class="share-btn">
+                        <i class="fas fa-share"></i> Share Research
+                    </a>
+                    <a href="article3.html" class="share-btn">
+                        <i class="fas fa-arrow-right"></i> Previous Story
+                    </a>
+                </div>
+            </div>
+        </main>
+
+        <aside class="sidebar">
+            <div class="threat-level">
+                <h3><i class="fas fa-exclamation-triangle"></i> THREAT LEVEL</h3>
+                <div style="font-size: 1.5rem; font-weight: bold;">HIGH</div>
+                <div style="font-size: 0.9rem; margin-top: 5px;">AI-Enhanced Targeting</div>
+            </div>
+
+            <div class="sidebar-card">
+                <h4><i class="fas fa-newspaper"></i> Related Articles</h4>
+                <ul class="related-articles">
+                    <li>
+                        <a href="index.html">URGENT: Data Theft Component Discovered</a>
+                        <div class="meta">June 18, 2025 • Alex Thompson</div>
+                    </li>
+                    <li>
+                        <a href="article3.html">Workplace Sabotage Component Discovered</a>
+                        <div class="meta">June 11, 2025 • Dr. Marcus Sterling</div>
+                    </li>
+                    <li>
+                        <a href="article4.html">Original Texas MSP Attack Report</a>
+                        <div class="meta">June 9, 2025 • Sarah Martinez</div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="sidebar-card">
+                <h4><i class="fas fa-chart-line"></i> Live Threat Feed</h4>
+                <div style="font-size: 0.9rem; color: var(--text-light);">
+                    <div style="padding: 10px 0; border-bottom: 1px solid #eee;">
+                        <div style="color: #ff9800; font-weight: 600;">🟡 ANALYZING</div>
+                        AI Behavior Pattern Learning
+                        <div style="font-size: 0.8rem; color: #999;">5 minutes ago</div>
+                    </div>
+                    <div style="padding: 10px 0; border-bottom: 1px solid #eee;">
+                        <div style="color: #ff4444; font-weight: 600;">🔴 ACTIVE</div>
+                        Machine Learning Updates Detected
+                        <div style="font-size: 0.8rem; color: #999;">12 minutes ago</div>
+                    </div>
+                    <div style="padding: 10px 0;">
+                        <div style="color: #4caf50; font-weight: 600;">🟢 MITIGATED</div>
+                        Basic Click Patterns Blocked
+                        <div style="font-size: 0.8rem; color: #999;">1 hour ago</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Contact</a>
+                <a href="#">RSS Feed</a>
+                <a href="#">Newsletter</a>
+                <a href="#">Advertise</a>
+            </div>
+            <p>&copy; 2025 CyberSec Daily. All rights reserved. Professional cybersecurity news and analysis.</p>
+        </div>
+    </footer>
+</body>
+</html>
